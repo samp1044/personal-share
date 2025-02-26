@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Personal Share" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="personal-share" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="at.sampas.personal_share.PersonalShareApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
