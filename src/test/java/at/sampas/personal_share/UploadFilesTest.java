@@ -1,4 +1,4 @@
-package at.sampas.personal_share.file;
+package at.sampas.personal_share;
 
 import org.junit.jupiter.api.Test;
 
