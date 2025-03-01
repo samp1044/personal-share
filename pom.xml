@@ -12,7 +12,7 @@
     <artifactId>personal-share</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>personal-share</name>
-    <description>A self hosted file share application</description>
+    <description>A self-hosted file share application</description>
 
     <properties>
         <java.version>21</java.version>
