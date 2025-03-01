@@ -1,4 +1,11 @@
 package at.sampas.personal_share.file.domain;
 
-public class FileId {
+import at.sampas.personal_share.shared.UuidValueObject;
+
+public class FileId extends UuidValueObject {
+    FileId() {
+        super();
+    }
+
+
 }
