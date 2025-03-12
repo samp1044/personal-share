@@ -6,18 +6,30 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6F56F0EC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalShare", "src\PersonalShare\PersonalShare.csproj", "{0DB19FB2-FF10-4562-B861-99B99DF5382C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalShare.Test", "tests\PersonalShare.Test\PersonalShare.Test.csproj", "{EAE13860-F2B5-4B1F-9B1E-B513FD3DF685}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Test|Any CPU = Test|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0DB19FB2-FF10-4562-B861-99B99DF5382C} = {5495B86E-D114-43DB-8FFC-F3E5C7EAB411}
+		{EAE13860-F2B5-4B1F-9B1E-B513FD3DF685} = {6F56F0EC-6EDF-4DFA-9E72-5243BECDA2F7}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0DB19FB2-FF10-4562-B861-99B99DF5382C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0DB19FB2-FF10-4562-B861-99B99DF5382C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DB19FB2-FF10-4562-B861-99B99DF5382C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DB19FB2-FF10-4562-B861-99B99DF5382C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DB19FB2-FF10-4562-B861-99B99DF5382C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0DB19FB2-FF10-4562-B861-99B99DF5382C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0DB19FB2-FF10-4562-B861-99B99DF5382C}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{0DB19FB2-FF10-4562-B861-99B99DF5382C}.Test|Any CPU.Build.0 = Test|Any CPU
+		{EAE13860-F2B5-4B1F-9B1E-B513FD3DF685}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE13860-F2B5-4B1F-9B1E-B513FD3DF685}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE13860-F2B5-4B1F-9B1E-B513FD3DF685}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{EAE13860-F2B5-4B1F-9B1E-B513FD3DF685}.Test|Any CPU.Build.0 = Test|Any CPU
 	EndGlobalSection
 EndGlobal
