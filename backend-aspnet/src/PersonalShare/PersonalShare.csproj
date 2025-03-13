@@ -13,4 +13,9 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Common\RestApi\" />
+      <Folder Include="Features\" />
+    </ItemGroup>
+
 </Project>
