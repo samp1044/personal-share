@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace PersonalShare.Authentication;
+namespace PersonalShare.Features.Authentication.RestApi;
 
 [ApiController]
 [Route("api/v1/authentication")]

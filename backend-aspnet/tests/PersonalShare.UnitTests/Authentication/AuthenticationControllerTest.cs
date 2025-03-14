@@ -1,36 +1,55 @@
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using PersonalShare.Authentication;
+using PersonalShare.Common.Application;
+using PersonalShare.Features.Authentication;
+using PersonalShare.Features.Authentication.RestApi;
+using PersonalShare.Features.Authentication.Service;
 using Xunit;
 
 namespace PersonalShare.Test.Authentication;
 
 public class AuthenticationControllerTest
 {
+    private readonly Mock<IAuthenticationService> _mockedAuthenticationService;
+    private readonly AuthenticationController _authenticationController;
+    private readonly LoginDto _defaultLoginDto;
+    
+    public AuthenticationControllerTest()
+    {
+        _mockedAuthenticationService = new Mock<IAuthenticationService>();
+        _authenticationController = new AuthenticationController(_mockedAuthenticationService.Object);
+        _defaultLoginDto = new LoginDto("test@mail.com", "password");
+    }
+    
     [Fact]
     public async Task Test_SuccessfulLoginReturns201Async()
     {
-        var serviceMock = new Mock<IAuthenticationService>();
-        var controller = new AuthenticationController(serviceMock.Object);
-        var loginDto = new LoginDto("test@mail.com", "password");
-        var successfulToken = new AuthenticationToken();
-
-        var result = await controller.LoginAsync(loginDto);
+        var expectedResult = AuthenticationResult.Success("token");
+        _mockedAuthenticationService.Setup(s => 
+                s.AuthenticateAsync(It.IsAny<string>(), It.IsAny<string>()))
+            .ReturnsAsync(expectedResult);
+        
+        var result = await _authenticationController.LoginAsync(_defaultLoginDto);
         var createdResult = result as CreatedResult;
         
         Assert.NotNull(createdResult);
         Assert.Equal(StatusCodes.Status201Created, createdResult.StatusCode);
     }
-
-    public async Task Test_WrongLoginReturns401Async()
+    
+    [Fact]
+    public async Task Test_FailedLoginThrowsUnauthenticatedExceptionAsync()
     {
-        var serviceMock = new Mock<IAuthenticationService>();
-        var controller = new AuthenticationController(serviceMock.Object);
-        var loginDto = new LoginDto("test@mail.com", "password");
-        var successfulToken = new AuthenticationToken();
+        _mockedAuthenticationService.Setup(s =>
+            s.AuthenticateAsync(It.IsAny<string>(), It.IsAny<string>())).ThrowsAsync(new WrongCredentialsException());
+        await Assert.ThrowsAsync<UnauthenticatedException>(() => _authenticationController.LoginAsync(_defaultLoginDto));
+    }
 
-        Assert.ThrowsAsync<UnauthenticatedException>(() => controller.LoginAsync(loginDto));
+    [Fact]
+    public async Task Test_WrongLoginDataThrowsValidationExceptionAsync()
+    {
+        _mockedAuthenticationService.Setup(s =>
+            s.AuthenticateAsync(It.IsAny<string>(), It.IsAny<string>())).ThrowsAsync(new BadEmailFormatException());
+        await Assert.ThrowsAsync<ValidationException>(() => _authenticationController.LoginAsync(_defaultLoginDto));
     }
 }

@@ -2,12 +2,10 @@ namespace PersonalShare.Common.Application;
 
 public abstract class ApplicationException: Exception
 {
-    public string ExceptionCode { get; }
-    public string ExceptionMessage { get; }
+    public string ErrorCode { get; }
 
-    protected ApplicationException(string code, string message)
+    protected ApplicationException(string code, string message): base(message)
     {
-        ExceptionCode = code;
-        ExceptionMessage = message;
+        ErrorCode = code;
     }
 }
