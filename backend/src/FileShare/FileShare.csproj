@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\UserManagement\UserManagement\UserManagement.csproj" />
+      <Folder Include="Authentication\AspNetIdentityAuthenticationHandler\" />
     </ItemGroup>
 
 </Project>
