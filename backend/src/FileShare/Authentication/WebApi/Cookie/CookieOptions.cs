@@ -1,4 +1,4 @@
-namespace FileShare.Main.Authentication.Web.Cookie;
+namespace FileShare.Main.Authentication.WebApi.Cookie;
 
 public record CookieOptions()
 {

@@ -1,4 +1,4 @@
-namespace FileShare.Main.Authentication.Web;
+namespace FileShare.Main.Authentication.WebApi;
 
 public record UserPasswordDto
 {
