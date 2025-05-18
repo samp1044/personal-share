@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using FileShare.Main.Authentication.SessionManagement;
 using Microsoft.AspNetCore.Authentication;
 
 namespace FileShare.Main.Authentication.WebApi.Cookie;
@@ -22,7 +23,7 @@ internal class CookieAuthenticationMiddleware(RequestDelegate next) : Authentica
         });
     }
     
-    protected override async Task<AuthenticationInfo?> LoadAuthenticationFromAsync(HttpContext context)
+    protected override async Task<AuthenticationId?> LoadAuthenticationFromAsync(HttpContext context)
     {
         if (context.User.Identity?.IsAuthenticated != true)
         {
@@ -43,10 +44,7 @@ internal class CookieAuthenticationMiddleware(RequestDelegate next) : Authentica
             return null;
         }
 
-        return new AuthenticationInfo()
-        {
-            Value = token.Value,
-        };
+        return AuthenticationId.Parse(token.Value);
     }
 
     protected override async Task UpdateAuthenticationAsync(HttpContext context, ISession session)
@@ -55,7 +53,7 @@ internal class CookieAuthenticationMiddleware(RequestDelegate next) : Authentica
         {
             var claims = new List<Claim>
             {
-                new Claim(_tokenIdentifier, session.AuthenticationInfo.Value)
+                new Claim(_tokenIdentifier, session.AuthenticationId.ToString())
             };
 
             var identity = new ClaimsIdentity(claims, _cookieAuthScheme);

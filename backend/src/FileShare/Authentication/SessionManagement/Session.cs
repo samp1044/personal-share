@@ -1,21 +1,19 @@
-using FileShare.Main.Authentication.AuthenticationService;
-
 namespace FileShare.Main.Authentication.SessionManagement;
 
-public class SessionService(ISessionRepository sessionRepository) : ISession
+public class Session(ISessionRepository sessionRepository) : ISession
 {
     private ISessionRepository _sessionRepository = sessionRepository;
 
     public bool IsActive { get; } = false;
-    public AuthenticationInfo AuthenticationInfo { get; }
+    public AuthenticationId AuthenticationId { get; }
     public DateTime ExpiresUtc { get; }
     
-    public Task LoadAsync(AuthenticationInfo info)
+    public Task LoadAsync(AuthenticationId authentication)
     {
         throw new NotImplementedException();
     }
 
-    public Task CreateAsync(AuthenticationTicket ticket)
+    public Task CreateAsync(AuthenticationTicket authenticationTicket)
     {
         throw new NotImplementedException();
     }

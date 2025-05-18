@@ -1,3 +1,5 @@
+using FileShare.Main.Authentication.SessionManagement;
+
 namespace FileShare.Main.Authentication.WebApi;
 
 internal abstract class AuthenticationMiddleware(RequestDelegate next)
@@ -26,7 +28,7 @@ internal abstract class AuthenticationMiddleware(RequestDelegate next)
     /// </summary>
     /// <param name="context">The context of the incoming request</param>
     /// <returns>The authentication info attached to the request. Null if none</returns>
-    protected abstract Task<AuthenticationInfo?> LoadAuthenticationFromAsync(HttpContext context);
+    protected abstract Task<AuthenticationId?> LoadAuthenticationFromAsync(HttpContext context);
     
     /// <summary>
     /// Updates the authentication info attached to the response based on the current state of the session

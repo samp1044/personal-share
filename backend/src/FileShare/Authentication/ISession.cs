@@ -1,4 +1,4 @@
-using FileShare.Main.Authentication.AuthenticationService;
+using FileShare.Main.Authentication.SessionManagement;
 using FileShare.Main.Shared;
 
 namespace FileShare.Main.Authentication;
@@ -6,15 +6,15 @@ namespace FileShare.Main.Authentication;
 public interface ISession
 {
     public bool IsActive { get; }
-    public AuthenticationInfo AuthenticationInfo { get; }
+    public AuthenticationId AuthenticationId { get; }
     public DateTime ExpiresUtc { get; }
     
     /// <summary>
     /// Load the session associated with some authentication info, if any. 
     /// </summary>
-    /// <param name="info">The authentication info to load a session for</param>
+    /// <param name="authentication">The authentication info to load a session for</param>
     /// <exception cref="UnauthenticatedException">If no session can be loaded based on the provided authentication info</exception>
-    public Task LoadAsync(AuthenticationInfo info);
+    public Task LoadAsync(AuthenticationId authentication);
 
     /// <summary>
     /// Create a new session based on the received authentication ticket
