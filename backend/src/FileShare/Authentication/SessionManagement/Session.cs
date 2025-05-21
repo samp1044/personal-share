@@ -1,20 +1,72 @@
+using FileShare.Main.Shared;
+
 namespace FileShare.Main.Authentication.SessionManagement;
 
-public class Session(ISessionRepository sessionRepository) : ISession
+public class Session(ISessionRepository sessionRepository) : ISessionService
 {
-    private ISessionRepository _sessionRepository = sessionRepository;
-
-    public bool IsActive { get; } = false;
-    public AuthenticationId AuthenticationId { get; }
-    public DateTime ExpiresUtc { get; }
+    public bool IsActive { get; private set; } = false;
     
-    public Task LoadAsync(AuthenticationId authentication)
+    private TimeSpan _lifeTime = TimeSpan.FromDays(10);
+
+    public AuthenticationId AuthenticationId => Get().AuthenticationId;
+    public DateTime ExpiresUtc { get; }
+    public string UserId { get; }
+
+    public ISession Get()
     {
-        throw new NotImplementedException();
+        if (!IsActive)
+        {
+            throw new UnauthenticatedException();
+        }
+
+        return this;
+    }
+    
+    public async Task LoadAsync(AuthenticationId authentication)
+    {
+        var snapshot = await sessionRepository.LoadAsync(authentication);
+
+        if (snapshot == null)
+        {
+            throw new UnauthenticatedException();
+        }
+
+        if (snapshot.ExpiresUtc <= DateTime.UtcNow)
+        {
+            throw new UnauthenticatedException();
+        }
+        
+        IsActive = true;
+        AuthenticationId = AuthenticationId.Parse(snapshot.Id);
+        ExpiresUtc = ExpireTime;
+        _userId = snapshot.UserId;
+
+        await sessionRepository.SaveAsync(snapshot with
+        {
+            ExpiresUtc = ExpiresUtc
+        });
     }
 
-    public Task CreateAsync(AuthenticationTicket authenticationTicket)
+    public async Task CreateAsync(AuthenticationTicket authenticationTicket)
     {
-        throw new NotImplementedException();
+        var authenticationId = AuthenticationId.New();
+        var expiresUtc = ExpireTime;
+        var userId = authenticationTicket.UserId;
+
+        var snapshot = new SessionSnapshot()
+        {
+            Id = authenticationId.ToString(),
+            ExpiresUtc = expiresUtc,
+            UserId = userId
+        };
+        
+        await sessionRepository.SaveAsync(snapshot);
+        
+        AuthenticationId = authenticationId;
+        ExpiresUtc = expiresUtc;
+        _userId = userId;
+        IsActive = true;
     }
+    
+    private DateTime ExpireTime => DateTime.UtcNow + _lifeTime;
 }

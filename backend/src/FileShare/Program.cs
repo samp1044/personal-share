@@ -15,18 +15,10 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         
-        builder.Services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = "cookie";
-            options.DefaultSignOutScheme = "cookie";
-        }).AddCookie("cookie");
-        
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
         builder.Services.AddControllers();
-
-        builder.Services.AddIdentityCore<UserIdentity>().AddUserStore<UserStore>();
         
         builder.Services.AddScoped<ICommandHandler<AuthenticateCommand>, AuthenticateCommandHandler>();
         builder.Services.AddScoped<ISession, Session>();

@@ -2,20 +2,22 @@ namespace FileShare.Main.Authentication.SessionManagement;
 
 public class AuthenticationId
 {
-    private string _id;
+    private readonly Guid _id;
 
-    private AuthenticationId(string id)
+    private AuthenticationId(Guid id)
     {
         _id = id;
     }
 
+    public static AuthenticationId New() => new AuthenticationId(Guid.NewGuid());
+    
     public static AuthenticationId Parse(string id)
     {
-        return new AuthenticationId(id);
+        return new AuthenticationId(Guid.Parse(id));
     }
     
     public override string ToString()
     {
-        return _id;
+        return _id.ToString();
     }
 }

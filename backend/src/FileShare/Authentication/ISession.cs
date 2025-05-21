@@ -5,9 +5,20 @@ namespace FileShare.Main.Authentication;
 
 public interface ISession
 {
-    public bool IsActive { get; }
     public AuthenticationId AuthenticationId { get; }
     public DateTime ExpiresUtc { get; }
+    public string UserId { get; }
+}
+
+internal interface ISessionService: ISession
+{
+    public bool IsActive { get; }
+    
+    /// <summary>
+    /// Retrieves the current active session
+    /// </summary>
+    /// <exception cref="UnauthenticatedException">If no session is active</exception>
+    public ISession Get();
     
     /// <summary>
     /// Load the session associated with some authentication info, if any. 
