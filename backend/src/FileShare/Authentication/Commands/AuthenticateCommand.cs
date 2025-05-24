@@ -1,6 +1,6 @@
 using FileShare.Main.Shared;
 
-namespace FileShare.Main.Authentication.AuthenticationCommands;
+namespace FileShare.Main.Authentication.Commands;
 
 public record AuthenticateCommand(string Username, string Password);
 

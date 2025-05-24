@@ -1,6 +1,6 @@
 using FileShare.Main.Authentication;
 using FileShare.Main.Authentication.AspNetIdentityAuthenticationProvider;
-using FileShare.Main.Authentication.AuthenticationCommands;
+using FileShare.Main.Authentication.Commands;
 using FileShare.Main.Authentication.Persistence;
 using FileShare.Main.Authentication.SessionManagement;
 using FileShare.Main.Authentication.WebApi.Cookie;

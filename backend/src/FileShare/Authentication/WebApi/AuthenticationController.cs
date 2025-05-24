@@ -1,5 +1,6 @@
-using FileShare.Main.Authentication.AuthenticationCommands;
+using FileShare.Main.Authentication.Commands;
 using FileShare.Main.Shared;
+using FileShare.Main.Shared.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,8 @@ public class AuthenticationController(ICommandHandler<AuthenticateCommand> authe
 {
     [HttpPost]
     [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType<BadInputResultDto>(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateAuthenticationAsync([FromBody] UserPasswordDto userPasswordDto)
     {
         await authenticate.HandleAsync(new AuthenticateCommand(userPasswordDto.Email, userPasswordDto.Password));
